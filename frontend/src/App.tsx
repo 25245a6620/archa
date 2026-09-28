@@ -3,6 +3,8 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Timeline from './components/timeline/Timeline';
 import DecisionDetail from './components/timeline/DecisionDetail';
+import ArchitectureMap from './components/architecture/ArchitectureMap';
+import MemoryInspector from './components/memory/MemoryInspector';
 
 function App() {
   return (
@@ -16,7 +18,8 @@ function App() {
           </div>
           <div style={{ display: 'flex', gap: '1rem' }}>
             <Link to="/" style={{ color: 'white', textDecoration: 'none', fontWeight: 500 }}>Home</Link>
-            <Link to="/timeline" style={{ color: 'white', textDecoration: 'none', fontWeight: 500 }}>Architecture Timeline</Link>
+            <Link to="/architecture" style={{ color: 'white', textDecoration: 'none', fontWeight: 500 }}>Architecture Map</Link>
+            <Link to="/timeline" style={{ color: 'white', textDecoration: 'none', fontWeight: 500 }}>Timeline</Link>
           </div>
         </nav>
 
@@ -26,14 +29,16 @@ function App() {
             <Route path="/" element={
               <div style={{ padding: '2rem', textAlign: 'center' }}>
                 <h2>Welcome to ARCHA</h2>
-                <p>Phase 5 — Architecture Evolution Timeline is active.</p>
-                <Link to="/timeline" style={{ display: 'inline-block', marginTop: '1rem', padding: '0.5rem 1rem', background: '#2563eb', color: 'white', textDecoration: 'none', borderRadius: '0.25rem' }}>
-                  View Timeline
+                <p>Phase 6 — Architecture Map & Memory Inspector.</p>
+                <Link to="/architecture" style={{ display: 'inline-block', marginTop: '1rem', padding: '0.5rem 1rem', background: '#2563eb', color: 'white', textDecoration: 'none', borderRadius: '0.25rem' }}>
+                  View Architecture Map
                 </Link>
               </div>
             } />
+            <Route path="/architecture" element={<ArchitectureMap />} />
             <Route path="/timeline" element={<Timeline />} />
             <Route path="/timeline/:id" element={<DecisionDetail />} />
+            <Route path="/memory" element={<MemoryInspector />} />
           </Routes>
         </main>
       </div>

@@ -56,9 +56,23 @@ export default function DecisionDetail() {
             <div style={{ marginBottom: '2rem' }}>
                 <div style={{ fontSize: '1rem', color: '#6b7280', fontWeight: 600, marginBottom: '0.25rem' }}>{decision.id}</div>
                 <h1 style={{ fontSize: '2.25rem', fontWeight: 700, color: '#111827', margin: '0 0 1rem 0' }}>{decision.title}</h1>
-                <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', marginBottom: '1.5rem' }}>
                     <span style={{ padding: '0.25rem 0.75rem', background: '#dcfce7', color: '#166534', borderRadius: '9999px', fontSize: '0.875rem', fontWeight: 500 }}>{decision.status}</span>
                     <span style={{ color: '#6b7280', fontSize: '0.875rem' }}>{decision.date || 'Not documented'}</span>
+                </div>
+                <div style={{ display: 'flex', gap: '1rem' }}>
+                    <button
+                        onClick={() => navigate('/architecture')}
+                        style={{ padding: '0.5rem 1rem', background: '#ffffff', border: '1px solid #d1d5db', borderRadius: '0.5rem', color: '#111827', fontWeight: 600, cursor: 'pointer' }}
+                    >
+                        View on Architecture Map
+                    </button>
+                    <button
+                        onClick={() => navigate(`/memory?decision=${decision.id}`)}
+                        style={{ padding: '0.5rem 1rem', background: '#2563eb', border: 'none', borderRadius: '0.5rem', color: '#ffffff', fontWeight: 600, cursor: 'pointer' }}
+                    >
+                        Inspect Memory
+                    </button>
                 </div>
             </div>
 
