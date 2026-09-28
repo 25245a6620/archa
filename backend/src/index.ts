@@ -16,8 +16,10 @@ app.use(express.json());
 // Routes
 import memoryRoutes from './routes/memory';
 import agentRoutes from './routes/agent';
+import decisionRoutes from './routes/decisions';
 app.use('/api/memory', memoryRoutes);
 app.use('/api/agent', agentRoutes);
+app.use('/api/decisions', decisionRoutes);
 
 // Health endpoint
 app.get('/api/health', (req: Request, res: Response) => {
