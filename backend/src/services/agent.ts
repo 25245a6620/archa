@@ -80,7 +80,11 @@ export const answerWithAgent = async (question: string, memoryEnabled: boolean) 
 
             let results = recallRes?.results || [];
 
-            // Phase 7.1 Precision Filter
+            // Phase 7.2 Strict Evidence Relevance Validation
+            // Only consider memories that actually match the vector query semantically
+            const RELEVANCE_THRESHOLD = 0.85;
+            results = results.filter((r: any) => r.scores && r.scores.semantic >= RELEVANCE_THRESHOLD);
+
             const decisionIds = results.map((r: any) => r.metadata?.decisionId).filter(Boolean);
             if (decisionIds.length > 0) {
                 const primaryDecisionId = decisionIds[0];
