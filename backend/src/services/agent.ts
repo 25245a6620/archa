@@ -89,7 +89,8 @@ export const answerWithAgent = async (question: string, memoryEnabled: boolean) 
                     sources.push({
                         type: "hindsight",
                         id: r.id || `memory-${idx}`,
-                        summary: r.text ? r.text.substring(0, 50) + "..." : "Memory"
+                        summary: r.text ? r.text.substring(0, 50) + "..." : "Memory",
+                        metadata: r.metadata || {}
                     });
                     return r.text;
                 }).join("\n\n---\n\n");
