@@ -6,8 +6,6 @@ import path from 'path';
 // Load environment variables from the root .env file
 dotenv.config({ path: path.join(__dirname, '../../.env') });
 
-import memoryRoutes from './routes/memory';
-
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -16,7 +14,10 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
+import memoryRoutes from './routes/memory';
+import agentRoutes from './routes/agent';
 app.use('/api/memory', memoryRoutes);
+app.use('/api/agent', agentRoutes);
 
 // Health endpoint
 app.get('/api/health', (req: Request, res: Response) => {
