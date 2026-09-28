@@ -47,5 +47,5 @@ export const getMemoryStats = async () => {
     const client = getClient();
     const bankId = getBankId();
 
-    return client.getBankProfile(bankId);
+    return client.getBankConfig(bankId);
 };
