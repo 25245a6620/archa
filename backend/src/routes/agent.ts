@@ -24,9 +24,12 @@ router.post('/ask', async (req: Request, res: Response) => {
         const result = await answerWithAgent(question, isMemoryOn);
         res.json(result);
     } catch (error: any) {
-        // Safe configuration/execution error mapping, masking real keys
+        console.error("Internal Agent Error:", error);
         if (error.message && error.message.includes('401')) {
             return res.status(500).json({ error: 'LLM API failure: Invalid credentials configured.' });
+        }
+        if (error.message && error.message.includes('429')) {
+            return res.status(500).json({ error: 'LLM API failure: Insufficient credits or rate limited.' });
         }
         res.status(500).json({ error: 'Agent failed to process request due to internal error.' });
     }

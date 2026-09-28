@@ -30,7 +30,11 @@ Return JSON like:
 
     try {
         const resultString = await askLlmJson(systemPrompt, question, "gpt-4o-mini");
-        const parsed = JSON.parse(resultString);
+        let raw = resultString.trim();
+        if (raw.startsWith('```json')) raw = raw.replace(/^```json\s*/, '');
+        if (raw.startsWith('```')) raw = raw.replace(/^```\s*/, '');
+        if (raw.endsWith('```')) raw = raw.replace(/\s*```$/, '');
+        const parsed = JSON.parse(raw);
         return (parsed.intent as Intent) || "UNKNOWN";
     } catch (e) {
         return "UNKNOWN";
