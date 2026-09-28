@@ -78,7 +78,17 @@ export const answerWithAgent = async (question: string, memoryEnabled: boolean) 
             console.log(`[ARCHA] Querying Hindsight for: "${question}"`);
             const recallRes: any = await recallMemories(question);
 
-            const results = recallRes?.results || [];
+            let results = recallRes?.results || [];
+
+            // Phase 7.1 Precision Filter
+            const decisionIds = results.map((r: any) => r.metadata?.decisionId).filter(Boolean);
+            if (decisionIds.length > 0) {
+                const primaryDecisionId = decisionIds[0];
+                results = results.filter((r: any) => r.metadata?.decisionId === primaryDecisionId).slice(0, 3);
+            } else {
+                results = results.slice(0, 3);
+            }
+
             memoryCount = results.length;
 
             if (memoryCount > 0) {
@@ -120,7 +130,9 @@ Strict Anti-Hallucination Rules:
 - Do not invent decisions that are not present in memory.
 - Do not claim the organization made a decision unless evidence supports it.
 - Distinguish historical facts from reasoning.
-- If evidence is insufficient or it's a historical question and you received NO historical evidence, explicitly state that you couldn't find historical evidence.
+${!memoryEnabled
+            ? "- Historical memory is DISABLED. You did not search historical memory. Therefore, DO NOT claim that you searched and found no evidence. Instead, clarify that historical memory was bypassed and you are providing a general architectural answer."
+            : "- If evidence is insufficient or it's a historical question and you received NO historical evidence (NONE PROVIDED), explicitly state that no historical evidence was found for this question."}
 - Do not fabricate dates, outcomes, incidents, or architecture components.
 - Generic architectural knowledge must not be presented as historical organizational fact.
 
