@@ -95,7 +95,7 @@ export default function ArchitectureMap() {
                 </div>
             </div>
 
-            <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
+            <div className="map-container">
 
                 {/* Left side: The Map */}
                 <div style={{ flex: '1 1 65%', overflow: 'auto', padding: '2rem', background: '#f1f5f9', position: 'relative' }}>
@@ -156,7 +156,7 @@ export default function ArchitectureMap() {
                 </div>
 
                 {/* Right side: Detail Panel */}
-                <div style={{ flex: '0 0 35%', minWidth: '350px', background: '#ffffff', borderLeft: '1px solid #e5e7eb', overflow: 'auto', padding: '2rem' }}>
+                <div className="map-detail-panel" style={{ flex: '0 0 35%', minWidth: '350px', background: '#ffffff', borderLeft: '1px solid #e5e7eb', overflow: 'auto', padding: '2rem' }}>
                     {selectedDecision ? (
                         <div>
                             <div style={{ fontSize: '0.875rem', fontWeight: 600, color: '#6b7280', marginBottom: '0.5rem' }}>{selectedDecision.id}</div>

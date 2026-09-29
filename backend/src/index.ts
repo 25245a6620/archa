@@ -3,8 +3,11 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import path from 'path';
 
-// Load environment variables from the root .env file
+// Load environment variables with fallback paths
+dotenv.config();
+dotenv.config({ path: path.join(__dirname, '../.env'), override: true });
 dotenv.config({ path: path.join(__dirname, '../../.env'), override: true });
+
 
 const app = express();
 const port = process.env.PORT || 3000;

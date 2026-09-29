@@ -81,14 +81,17 @@ export const answerWithAgent = async (question: string, memoryEnabled: boolean) 
             let results = recallRes?.results || [];
 
             // Phase 7.2 Strict Evidence Relevance Validation
-            // Only consider memories that actually match the vector query semantically
-            const RELEVANCE_THRESHOLD = 0.85;
+            // Empirically calibrated: valid historical decisions score >= 0.80 in Hindsight, while unknown decisions score < 0.73
+            const RELEVANCE_THRESHOLD = 0.80;
             results = results.filter((r: any) => r.scores && r.scores.semantic >= RELEVANCE_THRESHOLD);
 
             const decisionIds = results.map((r: any) => r.metadata?.decisionId).filter(Boolean);
             if (decisionIds.length > 0) {
                 const primaryDecisionId = decisionIds[0];
                 results = results.filter((r: any) => r.metadata?.decisionId === primaryDecisionId).slice(0, 3);
+            } else if (intent === "WHY_DECISION") {
+                // If asking why a decision was made and no decision metadata matches, do not attach unrelated generic policies
+                results = [];
             } else {
                 results = results.slice(0, 3);
             }
